@@ -27,7 +27,7 @@ class Server(db.Model):
     __tablename__ = 'servers'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), required=True)
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
     @db.validates('project_id')
@@ -43,6 +43,16 @@ class Server(db.Model):
         return value
 
 
-class TaskSchema(mm.ModelSchema):
+class ProjectSchema(mm.ModelSchema):
     class Meta:
-        model = Task
+        model = Project
+
+
+class ServerSchema(mm.ModelSchema):
+    class Meta:
+        model = Server
+
+
+
+
+#  TODO: перенести верификацию в marshmallow
