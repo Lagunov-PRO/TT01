@@ -39,6 +39,13 @@ class Server(db.Model):
         assert value.isalpha()
         return value
 
+    def __init__(self, name, project_id):
+        self.name = name
+        self.project_id = project_id
+
+    def as_dict(self):
+        return {'id': self.id, 'name': self.name}
+
 
 class ProjectSchema(mm.ModelSchema):
     class Meta:
