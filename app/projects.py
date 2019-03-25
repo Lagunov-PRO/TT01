@@ -2,12 +2,14 @@ from flask import Blueprint, jsonify, request, abort
 from app import db
 from .models import Project, ProjectSchema, Server, ServerSchema
 
+db.create_all()
+db.session.commit()
+
 projects = Blueprint('projects', __name__)
 
 
 @projects.route('/api/projects', methods=['GET'])
 def get_projects():
-    # FIXME: исправить
     projects = Project.query.all()
     data = ProjectSchema(many=True).dump(projects).data
     return jsonify(data)
