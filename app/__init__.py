@@ -10,5 +10,5 @@ app.config.from_envvar('RUN_CFG')
 db = SQLAlchemy(app)
 mm = Marshmallow(app)
 
-from . import tasks
-app.register_blueprint(tasks.tasks, url_prefix='/tasks')
+from . import projects
+app.register_blueprint(projects.projects, url_prefix='/api')

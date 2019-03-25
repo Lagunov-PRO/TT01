@@ -2,10 +2,10 @@ from flask import Blueprint, jsonify, request, abort
 from app import db
 from .models import Project, ProjectSchema, Server, ServerSchema
 
-tasks = Blueprint('projects', __name__)
+projects = Blueprint('projects', __name__)
 
 
-@tasks.route('/api/projects', methods=['GET'])
+@projects.route('/api/projects', methods=['GET'])
 def get_projects():
     # FIXME: исправить
     projects = Project.query.all()
@@ -13,7 +13,7 @@ def get_projects():
     return jsonify(data)
 
 
-@tasks.route('/api/projects', methods=['POST'])
+@projects.route('/api/projects', methods=['POST'])
 def add_project():
     if not request.is_json or 'name' not in request.json:
         abort(400)
@@ -25,7 +25,7 @@ def add_project():
     return '', 200
 
 
-@tasks.route('/api/servers', methods=['POST'])
+@projects.route('/api/servers', methods=['POST'])
 def add_server():
     if not request.is_json or 'name' not in request.json:
         abort(400)
@@ -37,7 +37,7 @@ def add_server():
     return '', 200
 
 
-@tasks.route('/api/servers', methods=['GET'])
+@projects.route('/api/servers', methods=['GET'])
 def get_servers():
     # FIXME: исправить
     server = Project.query.all()
@@ -45,7 +45,7 @@ def get_servers():
     return jsonify(data)
 
 
-@tasks.route('/api/servers/<int:id>', methods=['DELETE'])
+@projects.route('/api/servers/<int:id>', methods=['DELETE'])
 def delete_server(id):
 
     server = Server.query.filter(Server.id == id).first()
