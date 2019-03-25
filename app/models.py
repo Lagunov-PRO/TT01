@@ -5,7 +5,7 @@ class Project(db.Model):  # renamed from Tasks to Projects
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    servers = db.relationship('Server', primaryjoin="and_(Project.id==Server.project_id, ""Server.id)")  # uselist=False
+    servers = db.relationship('Server', primaryjoin="and_(Project.id==Server.project_id)")  # uselist=False
 
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
