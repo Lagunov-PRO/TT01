@@ -5,7 +5,7 @@ class Project(db.Model):  # renamed from Tasks to Projects
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    servers = db.relationship('Server')
+    servers = db.relationship('Server', primaryjoin="and_(Project.id==Server.project_id, ""Server.id)")  # uselist=False
 
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
@@ -27,7 +27,7 @@ class Server(db.Model):
     __tablename__ = 'servers'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), required=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)  # FIXME: required=True not working
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
     @db.validates('project_id')
@@ -51,8 +51,6 @@ class ProjectSchema(mm.ModelSchema):
 class ServerSchema(mm.ModelSchema):
     class Meta:
         model = Server
-
-
 
 
 #  TODO: перенести верификацию в marshmallow
