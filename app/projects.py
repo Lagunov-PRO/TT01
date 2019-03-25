@@ -32,7 +32,7 @@ def add_server():
     if not request.is_json or 'name' not in request.json:
         abort(400)
 
-    server = Server(request.json['name'])
+    server = Server(request.json['name'], request.json['project_id'])
     db.session.add(server)
     db.session.commit()
 
