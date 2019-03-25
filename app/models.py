@@ -27,11 +27,11 @@ class Server(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False, unique=True)  # FIXME: required=True not working
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
-    @db.validates('project_id')
-    def validate_projects_count(self, key, value):
-        projects_count = db.column_property(db.select([db.func.count(value)]))
-        assert projects_count <= 2
-        return value
+    # @db.validates('project_id')
+    # def validate_projects_count(self, key, value):
+    #     projects_count = db.column_property(db.select([db.func.count(value)]))
+    #     assert projects_count <= 2
+    #     return value
 
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
