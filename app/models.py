@@ -1,6 +1,3 @@
-from sqlalchemy import select, func
-from sqlalchemy.orm import relationship, column_property, validates
-
 from . import db, mm
 
 
@@ -11,7 +8,7 @@ class Project(db.Model):  # renamed from Tasks to Projects
     servers = db.relationship('Server')
 
     #  Проверяем, что имя содержит только буквы
-    @validates('name')
+    @db.validates('name')
     def validate_name(self, value):
         assert value.isalpha()
         return value
@@ -33,14 +30,14 @@ class Server(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
-    @validates('project_id')
+    @db.validates('project_id')
     def validate_projects_count(self, key, value):
-        projects_count = column_property(select([func.count(value)]))
+        projects_count = db.column_property(db.select([db.func.count(value)]))
         assert projects_count <= 2
         return value
 
     #  Проверяем, что имя содержит только буквы
-    @validates('name')
+    @db.validates('name')
     def validate_name(self, key, value):
         assert value.isalpha()
         return value
