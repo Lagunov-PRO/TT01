@@ -42,13 +42,12 @@ class Server(db.Model):
 
 class ProjectSchema(mm.ModelSchema):
     class Meta:
-        model = Project
+        fields = ('id', 'name', 'servers')
 
 
 class ServerSchema(mm.ModelSchema):
     class Meta:
-        model = Server
-
+        fields = ('id', 'name', 'project_id')
 
 
 #  TODO: перенести верификацию в marshmallow
