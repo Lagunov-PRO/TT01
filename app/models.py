@@ -24,7 +24,7 @@ class Server(db.Model):
     __tablename__ = 'server'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False, unique=True)  # FIXME: required=True not working
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)  # FIXME: required=True not working
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
     @db.validates('project_id')
@@ -41,15 +41,15 @@ class Server(db.Model):
             raise ValidationError('В названии сервера должны быть только буквы.')
         return value
 
+    @db.validates('project_id')
+    def check_server_without_project(self, key, value):
+        if not value:
+            raise ValidationError('Нельзя добавлять сервера без проектов.')
+        return value
+
     def __init__(self, name, project_id):
         self.name = name
         self.project_id = project_id
-
-
-#  Custom validators
-def check_server_without_project(data):
-    if not data:
-        raise ValidationError('Нельзя добавлять сервера без проектов.')
 
 
 class ProjectSchema(mm.ModelSchema):
