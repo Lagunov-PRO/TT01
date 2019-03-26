@@ -48,14 +48,18 @@ def get_servers():
     return jsonify(data)
 
 
-#  FIXME: not ready yet
-
-
 @projects.route('/servers/<int:id>', methods=['PUT'])
-def update_servers():
-    server = Server.query.all()
-    data = ServerSchema(many=True).dump(server).data
-    return jsonify(data)
+def update_servers(id):
+    server = Server.query.get(id)
+    name = request.json['name']
+    project_id = request.json['project_id']
+
+    server.name = name
+    server.project_id = project_id
+
+    db.session.commit()
+
+    return '', 200
 
 
 @projects.route('/servers/<int:id>/delete', methods=['DELETE'])
