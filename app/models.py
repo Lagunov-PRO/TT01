@@ -19,9 +19,6 @@ class Project(db.Model):  # renamed from Tasks to Projects
     def __init__(self, name):
         self.name = name
 
-    def as_dict(self):
-        return {'id': self.id, 'name': self.name}
-
 
 class Server(db.Model):
     __tablename__ = 'server'
@@ -45,13 +42,9 @@ class Server(db.Model):
             raise ValidationError('В названии сервера должны быть только буквы.')
         return value
 
-
     def __init__(self, name, project_id):
         self.name = name
         self.project_id = project_id
-
-    def as_dict(self):
-        return {'id': self.id, 'name': self.name}
 
 
 #  Custom validators
