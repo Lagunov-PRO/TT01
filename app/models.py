@@ -60,21 +60,9 @@ def check_server_without_project(data):
         raise ValidationError('Нельзя добавлять сервера без проектов.')
 
 
-#  SELECT * FROM server WHERE project_id = data
-# def check_project_has_3_servers(project_id):
-#     projects_id_list = Server.query.filter_by(project_id=project_id).all()
-#     if len(projects_id_list) == 3:
-#         raise ValidationError('В одном проекте не больше трёх серверов.')
-
-
 class ProjectSchema(mm.ModelSchema):
     class Meta:
         fields = ('id', 'name')
-
-
-# class ServerSchema(Schema):
-#     id = fields.Int(dump_only=True)
-#     project_id = fields.Nested(ProjectSchema, required=True, validate=check_server_without_project)
 
 
 class ServerSchema(mm.ModelSchema):
