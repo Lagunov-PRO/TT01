@@ -10,8 +10,8 @@ projects = Blueprint('projects', __name__)
 
 @projects.route('/projects', methods=['GET'])
 def get_projects():
-    projects = Project.query.all()
-    data = ProjectSchema(many=True).dump(projects).data
+    all_projects = Project.query.all()
+    data = ProjectSchema(many=True).dump(all_projects).data
     return jsonify(data)
 
 

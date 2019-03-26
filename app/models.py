@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 from . import db, mm
 
 
-class Project(db.Model):  # renamed from Tasks to Projects
+class Project(db.Model):
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
@@ -27,7 +27,6 @@ class Server(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False, unique=True)  # FIXME: required=True not working
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
-
     @db.validates('project_id')
     def check_project_has_3_servers(self, key, project_id):
         projects_id_list = Server.query.filter_by(project_id=project_id).all()
