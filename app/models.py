@@ -7,7 +7,7 @@ class Project(db.Model):
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    servers = db.relationship('Server', primaryjoin="and_(Project.id==Server.project_id)")  # uselist=False
+    servers = db.relationship('Server', backref='project_id', lazy=True)  # uselist=False
 
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
@@ -29,6 +29,8 @@ class Server(db.Model):
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
     @db.validates('project_id')
     def check_project_has_3_servers(self, key, project_id):
+        if not project_id:
+            raise ValidationError('Нельзя добавлять сервера без проектов.')
         projects_id_list = Server.query.filter_by(project_id=project_id).all()
         if len(projects_id_list) == 3:
             raise ValidationError('В одном проекте не больше трёх серверов.')
@@ -39,12 +41,6 @@ class Server(db.Model):
     def validate_name(self, key, value):
         if not value.isalpha():
             raise ValidationError('В названии сервера должны быть только буквы.')
-        return value
-
-    @db.validates('project_id')
-    def check_server_without_project(self, key, value):
-        if not value:
-            raise ValidationError('Нельзя добавлять сервера без проектов.')
         return value
 
     def __init__(self, name, project_id):
