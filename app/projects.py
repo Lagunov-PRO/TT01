@@ -62,7 +62,7 @@ def update_servers(id):
     return '', 200
 
 
-@projects.route('/servers/<int:id>/delete', methods=['DELETE'])
+@projects.route('/servers/<int:id>', methods=['DELETE'])
 def delete_server(id):
 
     server = Server.query.filter(Server.id == id).first()
