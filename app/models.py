@@ -69,7 +69,7 @@ def check_server_without_project(data):
 
 class ProjectSchema(mm.ModelSchema):
     class Meta:
-        fields = ('id', 'name', 'servers')
+        fields = ('id', 'name')
 
 
 # class ServerSchema(Schema):
