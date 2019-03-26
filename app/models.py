@@ -1,5 +1,4 @@
-from flask_marshmallow import Schema
-from marshmallow import ValidationError, fields, validates
+from marshmallow import ValidationError
 
 from . import db, mm
 
@@ -13,7 +12,8 @@ class Project(db.Model):  # renamed from Tasks to Projects
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
     def validate_name(self, key, value):
-        assert value.isalpha()
+        if not value.isalpha():
+            raise ValidationError('В названии проекта должны быть только буквы.')
         return value
 
     def __init__(self, name):
@@ -41,7 +41,8 @@ class Server(db.Model):
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
     def validate_name(self, key, value):
-        assert value.isalpha()
+        if not value.isalpha():
+            raise ValidationError('В названии сервера должны быть только буквы.')
         return value
 
 
