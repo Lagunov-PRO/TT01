@@ -24,7 +24,7 @@ class Server(db.Model):
     __tablename__ = 'server'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)  # FIXME: required=True not working
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
     #  Проверяем, что добавляемый project_id встречается меньше двух раз
     @db.validates('project_id')
