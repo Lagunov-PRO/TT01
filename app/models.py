@@ -7,7 +7,7 @@ class Project(db.Model):
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(20), nullable=False)
-    servers = db.relationship('Server', backref='project', lazy=True)  # uselist=False
+    servers = db.relationship('Server', backref='project', lazy=True)
 
     #  Проверяем, что имя содержит только буквы
     @db.validates('name')
