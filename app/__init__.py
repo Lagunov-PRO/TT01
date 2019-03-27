@@ -10,4 +10,3 @@ mm = Marshmallow(app)
 
 from . import projects
 app.register_blueprint(projects.projects, url_prefix='/api')
-
