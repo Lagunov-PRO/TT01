@@ -30,23 +30,10 @@ class ProjectsTestCase(unittest.TestCase):
         test.name = 'name'
         print(test.validate_name())
 
-    # def test_number(self):
-    #
-    #     self.assertEqual(response.status_code, 200)
-
     def test_mock_get_projects(self):
         with patch.object(projects, "get_projects", return_value=ProjectsTestCase.mock_data_good):
             result = projects.get_projects()
             self.assertTrue(result)
-    #
-    # @mock.patch('app.db', autospec=True)
-    # def test_save(self, mock_dblib):
-    #     writer = DBWriter()
-    #     writer.save("Hello World")
-    #     mock_dblib.return_value.commit.assert_called_with(writer,
-    #                                                       "INSERT INTO mytable SET mystring = 'Hello World'")
-
-
 
 
 if __name__ == '__main__':
