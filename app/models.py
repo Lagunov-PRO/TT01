@@ -54,6 +54,3 @@ class ProjectSchema(mm.ModelSchema):
 class ServerSchema(mm.ModelSchema):
     class Meta:
         fields = ('id', 'name', 'project_id')
-
-
-#  TODO: перенести верификацию в marshmallow

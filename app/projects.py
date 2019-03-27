@@ -67,7 +67,7 @@ def delete_server(id):
 
     server = Server.query.filter(Server.id == id).first()
     if not server:
-        return '', 404  # tuple - 1-ый элемент - ответ, 2 - код статуса
+        return '', 404
 
     db.session.delete(server)
     db.session.commit()
